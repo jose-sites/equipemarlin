@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Resultado do Mutirão - Equipe Marlim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a1f2e;
+            --secondary-color: #1a3a52;
+            --accent-gold: #d4a574;
+            --accent-blue: #3b82f6;
+            --text-light: #f0f4f8;
+            --text-muted: #a0aec0;
+            --transition: all 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(10, 31, 46, 1) 0%, rgba(26, 58, 82, 0.5) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 31, 46, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .back-link {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--text-light);
+            transform: translateX(-3px);
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 0;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(10, 31, 46, 0.95) 0%, rgba(26, 58, 82, 0.8) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 8vw, 2.8rem);
+            margin-bottom: 3rem;
+            color: var(--text-light);
+            position: relative;
+            padding-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .foto-destaque {
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--accent-gold);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .foto-destaque img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .foto-destaque:hover img {
+            transform: scale(1.02);
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .galeria-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .galeria-item:nth-child(1) { animation-delay: 0.1s; }
+        .galeria-item:nth-child(2) { animation-delay: 0.2s; }
+        .galeria-item:nth-child(3) { animation-delay: 0.3s; }
+        .galeria-item:nth-child(4) { animation-delay: 0.4s; }
+        .galeria-item:nth-child(5) { animation-delay: 0.5s; }
+        .galeria-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .galeria-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .galeria-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .galeria-item:hover .galeria-overlay {
+            opacity: 1;
+        }
+
+        .galeria-overlay-icon {
+            font-size: 2.5rem;
+        }
+
+        .resultado-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .resultado-card {
+            background: rgba(26, 58, 82, 0.6);
+            border: 2px solid var(--accent-gold);
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .resultado-card:nth-child(1) { animation-delay: 0.1s; }
+        .resultado-card:nth-child(2) { animation-delay: 0.2s; }
+        .resultado-card:nth-child(3) { animation-delay: 0.3s; }
+        .resultado-card:nth-child(4) { animation-delay: 0.4s; }
+        .resultado-card:nth-child(5) { animation-delay: 0.5s; }
+        .resultado-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .resultado-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            background: rgba(26, 58, 82, 0.8);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .resultado-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resultado-card h3 {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .resultado-card p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .destaques {
+            background: rgba(212, 165, 116, 0.08);
+            border: 2px solid var(--accent-gold);
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .destaques h3 {
+            color: var(--accent-gold);
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .destaque-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .destaque-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .destaque-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .destaque-content h4 {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .destaque-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(26, 58, 82, 0.8) 0%, rgba(10, 31, 46, 0.9) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 3px solid var(--accent-gold);
+        }
+
+        .cta-section h3 {
+            color: var(--accent-gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: var(--accent-gold);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            border: 2px solid var(--accent-gold);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            main {
+                margin-top: 70px;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+            }
+
+            .resultado-cards {
+                gap: 1.5rem;
+            }
+
+            .destaques {
+                padding: 2rem;
+            }
+
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .galeria-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="images/logo-novo.png" alt="Equipe Marlim" class="nav-logo">
+        <a href="/" class="back-link">← Voltar</a>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="container">
+                <h1>O Mutirão Aconteceu! 🌊</h1>
+                <p class="hero-subtitle">Equipe Marlim e comunidade em ação</p>
+                <p class="hero-desc">
+                    Um dia especial onde a Eco-Peneira deixou de ser apenas um protótipo 
+                    e se tornou uma mensagem viva de sustentabilidade para a comunidade.
+                </p>
+            </div>
+        </section>
+
+        <!-- EXPRESSÃO ARTÍSTICA -->
+        <section class="section">
+            <div class="container">
+                <h2>🎨 Expressão Artística pela Sustentabilidade</h2>
+                <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">
+                    Cilindros pintados com mensagens poderosas sobre a importância de proteger nossos oceanos
+                </p>
+
+                <div class="galeria-grid">
+                    <div class="galeria-item">
+                        <img src="images/resultado-cilindro-01.jpg" alt="Cilindro com mensagem sobre lixo">
+                        <div class="galeria-overlay">
+                            <div class="galeria-overlay-icon">🎨</div>
+                        </div>
+                    </div>
+
+                    <div class="galeria-item">
+                        <img src="images/resultado-cilindro-02.jpg" alt="Cilindro com peixe pintado">
+                        <div class="galeria-overlay">
+                            <div class="galeria-overlay-icon">🐟</div>
+                        </div>
+                    </div>
+
+                    <div class="galeria-item">
+                        <img src="images/resultado-cilindro-03.jpg" alt="Cilindro com algas marinhas">
+                        <div class="galeria-overlay">
+                            <div class="galeria-overlay-icon">🌿</div>
+                        </div>
+                    </div>
+
+                    <div class="galeria-item">
+                        <img src="images/resultado-cilindro-04.jpg" alt="Cilindro 'Menos lixo mais vida'">
+                        <div class="galeria-overlay">
+                            <div class="galeria-overlay-icon">♻️</div>
+                        </div>
+                    </div>
+
+                    <div class="galeria-item">
+                        <img src="images/resultado-cilindro-tartaruga.jpg" alt="Cilindro com tartaruga marinha">
+                        <div class="galeria-overlay">
+                            <div class="galeria-overlay-icon">🐢</div>
+                        </div>
+                    </div>
+
+                    <div class="galeria-item">
+                        <img src="images/resultado-stand-tartaruga.jpg" alt="Stand educativo com esqueletos de tartaruga">
+                        <div class="galeria-overlay">
+                            <div class="galeria-overlay-icon">📚</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-style: italic;">
+                    Mensagens criativas que comunicaram de forma visual a importância da sustentabilidade
+                </p>
+            </div>
+        </section>
+
+        <!-- EQUIPE EM AÇÃO -->
+        <section class="section">
+            <div class="container">
+                <h2>👥 A Equipe Marlim em Ação</h2>
+
+                <div class="foto-destaque">
+                    <img src="images/resultado-equipe-colonia.jpg" alt="Equipe Marlim em frente ao Colônia dos Pescadores">
+                </div>
+                <p style="text-align: center; color: var(--text-muted); margin-top: 1rem; font-size: 1.05rem;">
+                    Equipe Marlim reunida com parceiros em frente ao Colônia dos Pescadores, em Tapuã
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div class="foto-destaque" style="margin: 0;">
+                        <img src="images/resultado-equipe-tent.jpg" alt="Equipe no stand do mutirão">
+                    </div>
+                    <div class="foto-destaque" style="margin: 0;">
+                        <img src="images/resultado-equipe-fcs.jpg" alt="Equipe com bandeira FCS">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTADOS E DESTAQUES -->
+        <section class="section">
+            <div class="container">
+                <h2>✨ O que foi realizado</h2>
+
+                <div class="resultado-cards">
+                    <div class="resultado-card">
+                        <div class="resultado-icon">📄</div>
+                        <h3>Distribuição</h3>
+                        <p>Panfletos com informações sobre a Eco-Peneira alcançaram muitas pessoas</p>
+                    </div>
+
+                    <div class="resultado-card">
+                        <div class="resultado-icon">🎁</div>
+                        <h3>Brindes</h3>
+                        <p>Divulgação da Equipe Marlim com presentes que marcaram presença na comunidade</p>
+                    </div>
+
+                    <div class="resultado-card">
+                        <div class="resultado-icon">🗣️</div>
+                        <h3>Educação</h3>
+                        <p>Conversas sobre sustentabilidade e a importância de cuidar dos oceanos</p>
+                    </div>
+
+                    <div class="resultado-card">
+                        <div class="resultado-icon">🧹</div>
+                        <h3>Limpeza</h3>
+                        <p>Ação comunitária para remover lixo e demonstrar mudança positiva</p>
+                    </div>
+
+                    <div class="resultado-card">
+                        <div class="resultado-icon">🎨</div>
+                        <h3>Arte</h3>
+                        <p>Expressão criativa que comunicou mensagens poderosas sobre sustentabilidade</p>
+                    </div>
+
+                    <div class="resultado-card">
+                        <div class="resultado-icon">♻️</div>
+                        <h3>Conscientização</h3>
+                        <p>Comunidade compreendeu a importância do descarte correto de resíduos</p>
+                    </div>
+                </div>
+
+                <div class="destaques">
+                    <h3>🌟 Destaques do Mutirão</h3>
+                    <div class="destaque-list">
+                        <div class="destaque-item">
+                            <div class="destaque-icon">🌊</div>
+                            <div class="destaque-content">
+                                <h4>Tapuã – Praia da Mudança</h4>
+                                <p>Localização estratégica em frente ao Colégio de Pescadores, envolvendo a comunidade pesqueira</p>
+                            </div>
+                        </div>
+
+                        <div class="destaque-item">
+                            <div class="destaque-icon">🤝</div>
+                            <div class="destaque-content">
+                                <h4>Parcerias Reais</h4>
+                                <p>EEEFM Francelina Carneiro Setúbal e Shell NXplorers juntas demonstrando compromisso</p>
+                            </div>
+                        </div>
+
+                        <div class="destaque-item">
+                            <div class="destaque-icon">💚</div>
+                            <div class="destaque-content">
+                                <h4>Impacto Comunitário</h4>
+                                <p>Mensagens sobre sustentabilidade chegaram a centenas de pessoas</p>
+                            </div>
+                        </div>
+
+                        <div class="destaque-item">
+                            <div class="destaque-icon">🔄</div>
+                            <div class="destaque-content">
+                                <h4>Materiais Recicláveis</h4>
+                                <p>Demonstração prática que a sustentabilidade é construída com o que temos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section class="cta-section">
+            <div class="container">
+                <h3>A Jornada Continua</h3>
+                <p>
+                    O mutirão não foi o fim, foi o começo. Cada pessoa que participou, 
+                    que viu uma mensagem pintada na praia, que aprendeu sobre a importância 
+                    de proteger nossos oceanos, agora é parte da missão da Equipe Marlim.
+                </p>
+                <p style="font-size: 1.2rem; color: var(--accent-gold); margin-top: 1.5rem; font-weight: 600;">
+                    A sustentabilidade não é um projeto. É uma escolha diária. 🐚
+                </p>
+                <a href="/" class="cta-button">Voltar ao Projeto</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
