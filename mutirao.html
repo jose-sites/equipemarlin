@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutirão - Equipe Marlim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a1f2e;
+            --secondary-color: #1a3a52;
+            --accent-gold: #d4a574;
+            --accent-blue: #3b82f6;
+            --text-light: #f0f4f8;
+            --text-muted: #a0aec0;
+            --transition: all 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, rgba(10, 31, 46, 1) 0%, rgba(26, 58, 82, 0.5) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 31, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .back-link {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--text-light);
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 0;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(10, 31, 46, 0.95) 0%, rgba(26, 58, 82, 0.7) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .content-section {
+            padding: 3rem 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .local-card {
+            background: rgba(212, 165, 116, 0.1);
+            border: 2px solid var(--accent-gold);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .local-card h3 {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .local-info {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .horario {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-top: 1rem;
+        }
+
+        .atividades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .atividade-card {
+            background: rgba(26, 58, 82, 0.5);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .atividade-card:nth-child(1) { animation-delay: 0.1s; }
+        .atividade-card:nth-child(2) { animation-delay: 0.2s; }
+        .atividade-card:nth-child(3) { animation-delay: 0.3s; }
+        .atividade-card:nth-child(4) { animation-delay: 0.4s; }
+        .atividade-card:nth-child(5) { animation-delay: 0.5s; }
+        .atividade-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .atividade-card:hover {
+            border-color: rgba(212, 165, 116, 0.5);
+            background: rgba(26, 58, 82, 0.7);
+            transform: translateY(-5px);
+        }
+
+        .atividade-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .atividade-card h3 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .atividade-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .foto-destaque {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .foto-destaque img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(212, 165, 116, 0.2);
+            border: 2px solid var(--accent-gold);
+        }
+
+        .foto-legenda {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
+
+        .proposito-section {
+            background: rgba(212, 165, 116, 0.05);
+            border-left: 4px solid var(--accent-gold);
+            padding: 3rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+
+        .proposito-section h3 {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .proposito-section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(26, 58, 82, 0.8) 0%, rgba(10, 31, 46, 0.9) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 2px solid var(--accent-gold);
+        }
+
+        .cta-section h3 {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .editable-note {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid var(--accent-blue);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+            color: var(--accent-blue);
+            border-radius: 4px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            main {
+                margin-top: 70px;
+            }
+
+            .hero-section {
+                padding: 3rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .atividades-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .proposito-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="images/logo-novo.png" alt="Equipe Marlim" class="nav-logo">
+        <a href="/" class="back-link">← Voltar</a>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>Um Mutirão pela Sustentabilidade</h1>
+                <p class="hero-subtitle">Equipe Marlim e comunidade em ação</p>
+                <p class="hero-desc">
+                    Depois de desenvolver a Eco-Peneira, chegou o momento de levar essa missão 
+                    para a comunidade. Vamos juntos demonstrar que a sustentabilidade é responsabilidade de todos.
+                </p>
+            </div>
+        </section>
+
+        <!-- LOCAL E HORÁRIO -->
+        <section class="content-section">
+            <div class="container">
+                <div class="local-card">
+                    <h3>📍 Quando e Onde</h3>
+                    <div class="local-info">🏖️ Tapuã, em frente ao Colégio de Pescadores</div>
+                    <div class="horario">⏰ [HORÁRIO A DEFINIR]</div>
+                    <div class="editable-note" style="margin-top: 1.5rem; margin-bottom: 0;">
+                        <strong>Complete o horário do mutirão</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATIVIDADES -->
+        <section class="content-section">
+            <div class="container">
+                <h2>O que acontecerá</h2>
+                
+                <div class="atividades-grid">
+                    <div class="atividade-card">
+                        <div class="atividade-icon">📄</div>
+                        <h3>Panfletos</h3>
+                        <p>Distribuição de informações sobre a Eco-Peneira e sustentabilidade</p>
+                    </div>
+
+                    <div class="atividade-card">
+                        <div class="atividade-icon">🎁</div>
+                        <h3>Brindes</h3>
+                        <p>Brindes da Equipe Marlim para divulgar o projeto</p>
+                    </div>
+
+                    <div class="atividade-card">
+                        <div class="atividade-icon">🗣️</div>
+                        <h3>Apresentação</h3>
+                        <p>Explicação sobre a Eco-Peneira e proteção dos oceanos</p>
+                    </div>
+
+                    <div class="atividade-card">
+                        <div class="atividade-icon">🧹</div>
+                        <h3>Limpeza</h3>
+                        <p>Ação comunitária para remover lixo da praia com voluntários</p>
+                    </div>
+
+                    <div class="atividade-card">
+                        <div class="atividade-icon">🎨</div>
+                        <h3>Arte</h3>
+                        <p>Expressão artística sobre a importância do descarte correto</p>
+                    </div>
+
+                    <div class="atividade-card">
+                        <div class="atividade-icon">♻️</div>
+                        <h3>Conscientização</h3>
+                        <p>Conversa sobre responsabilidade ambiental com a comunidade</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOTO DESTAQUE -->
+        <section class="content-section">
+            <div class="container">
+                <div class="foto-destaque">
+                    <img src="images/equipe-marlim.jpg" alt="Equipe Marlim em frente ao Francelina">
+                    <p class="foto-legenda">Equipe Marlim preparada para fazer a diferença na comunidade</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROPÓSITO -->
+        <section class="content-section">
+            <div class="container">
+                <h2>Por que este mutirão?</h2>
+                
+                <div class="proposito-section">
+                    <h3>🌊 Nossa Missão</h3>
+                    <p>
+                        A Eco-Peneira é mais que um protótipo. É um símbolo do nosso compromisso com o meio ambiente. 
+                        Mas inovação sem conscientização não é suficiente.
+                    </p>
+                    <p>
+                        Este mutirão visa mostrar à comunidade que todos temos responsabilidade com nossos oceanos 
+                        e praias. Queremos que as pessoas entendam que jogar lixo no lugar certo é fundamental.
+                    </p>
+                </div>
+
+                <div class="proposito-section" style="border-left-color: var(--accent-blue); background: rgba(59, 130, 246, 0.05);">
+                    <h3 style="color: var(--accent-blue);">🤝 Trabalho em Conjunto</h3>
+                    <p>
+                        Este mutirão é realizado em parceria com grupos voluntários e outras instituições. 
+                        Demonstramos que a sustentabilidade é construída coletivamente.
+                    </p>
+                    <div class="editable-note">
+                        Adicione aqui o nome da instituição ou grupo parceiro
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAMADO À AÇÃO -->
+        <section class="cta-section">
+            <div class="container">
+                <h3>A Jornada Continua</h3>
+                <p>
+                    A história da Eco-Peneira não termina na sala de aula ou no laboratório. 
+                    Ela ganha vida quando chega à comunidade e motiva outras pessoas a cuidarem dos oceanos.
+                </p>
+                <p style="font-weight: 600; color: var(--accent-gold);">
+                    Você está convidado a fazer parte desta missão. 🐚
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
